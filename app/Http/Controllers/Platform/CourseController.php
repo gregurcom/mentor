@@ -16,11 +16,16 @@ use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
-    public function list(Category $category): View
+    public function list(Category $category, CourseService $courseService): View
     {
-        $courses = $category->courses()->paginate(10);
+        $courses = $courseService->getCourses($category);
 
         return view('platform.courses', compact(['courses', 'category']));
+    }
+
+    public function show(Course $course): View
+    {
+        return view('platform.course.index', compact('course'));
     }
 
     public function create(): View
@@ -35,11 +40,6 @@ class CourseController extends Controller
         Course::create(array_merge(['user_id' => Auth::id()], $request->validated()));
 
         return redirect()->route('dashboard')->with('status', __('app.alert.create-course'));
-    }
-
-    public function show(Course $course): View
-    {
-        return view('platform.course.index', compact('course'));
     }
 
     public function edit(Course $course): View

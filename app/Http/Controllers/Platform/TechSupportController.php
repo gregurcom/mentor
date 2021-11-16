@@ -10,7 +10,6 @@ use App\Mail\TechSupportMail;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
 
 class TechSupportController extends Controller
 {
@@ -21,13 +20,7 @@ class TechSupportController extends Controller
 
     public function send(SubmitTechSupportRequest $request): RedirectResponse
     {
-        try {
-            Mail::to(config('app.admin-email'))->send(new TechSupportMail($request->text));
-        } catch (\Exception $e) {
-            Log::alert($e->getMessage());
-
-            return redirect()->route('dashboard');
-        }
+        Mail::to(config('app.admin-email'))->send(new TechSupportMail($request->text));
 
         return redirect()->route('dashboard')->with('status', __('app.alert.tech-support'));
     }

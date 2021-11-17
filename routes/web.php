@@ -88,7 +88,3 @@ Route::name('password.')->group(function () {
         Route::put('reset-password', [PasswordResetController::class, 'update'])->name('update');
     });
 });
-
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});

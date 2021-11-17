@@ -24,7 +24,7 @@ Route::post('auth/login', [AuthController::class, 'login'])->name('login');
 Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
 Route::get('courses/{course}', [CourseController::class, 'show'])->name('courses.show');
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::post('courses', [CourseController::class, 'store'])->name('courses.store');
     Route::put('courses/{course}', [CourseController::class, 'update'])
         ->name('courses.update')

@@ -14,6 +14,7 @@ use App\Policies\TaskPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -37,6 +38,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        if (! $this->app->routesAreCached()) {
+            Passport::routes();
+        }
 
         Gate::define('update-task', function (User $user, Task $task) {
             return $user->id === $task->user_id;

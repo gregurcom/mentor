@@ -18,14 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             CourseSeeder::class,
-            DataTypesTableSeeder::class,
-            DataRowsTableSeeder::class,
-            MenusTableSeeder::class,
-            MenuItemsTableSeeder::class,
-            RolesTableSeeder::class,
-            PermissionsTableSeeder::class,
-            PermissionRoleTableSeeder::class,
-            SettingsTableSeeder::class,
         ]);
     }
 }

@@ -12,9 +12,6 @@ use App\Http\Controllers\Platform\DashboardController;
 use App\Http\Controllers\Platform\FileController;
 use App\Http\Controllers\Platform\LessonController;
 use App\Http\Controllers\Platform\RateController;
-use App\Http\Controllers\Platform\SubscriptionController;
-use App\Http\Controllers\Platform\CategoryController;
-use App\Http\Controllers\Platform\TaskController;
 use App\Http\Controllers\Platform\TechSupportController;
 use Illuminate\Support\Facades\Route;
 
@@ -46,18 +43,21 @@ Route::name('auth.')->group(function () {
 });
 
 Route::name('platform.')->group(function () {
-    Route::get('categories', CategoryController::class)->name('categories.list');
     Route::get('categories/{category}/courses', [CourseController::class, 'list'])->name('courses.list');
 
+    Route::view('categories', 'platform.categories')->name('categories.list');
+    Route::view('subscriptions', 'platform.subscriptions')->name('subscriptions.index');
+
+    Route::view('tasks', 'platform.task.index')->name('tasks');
+
     Route::resource('courses', CourseController::class)->except('index');
-    Route::resource('lessons', LessonController::class)->except('index');
+    Route::resource('lessons', LessonController::class)->except(['index', 'create']);
+    Route::get('lessons/create/{course}', [LessonController::class, 'create'])->name('lessons.create');
 
     Route::get('search', [CourseController::class, 'search'])->name('course.search');
 
     Route::middleware(['auth', 'verified'])->group(function () {
-        Route::get('file/{file}/download', FileController::class)->name('file.download');
-
-        Route::resource('subscriptions', SubscriptionController::class)->only(['index', 'store', 'destroy']);
+        Route::get('file/{file}/download', FileController::class)->name('file.download');;
 
         Route::get('courses/rate/{course}', RateController::class)->name('course.rate');
 

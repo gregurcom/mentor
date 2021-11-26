@@ -3,7 +3,11 @@
 declare(strict_types = 1);
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\CourseController;
+use App\Http\Controllers\API\DashboardController;
+use App\Http\Controllers\API\LessonController;
+use App\Http\Controllers\API\SubscriptionController;
 use App\Http\Controllers\API\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,23 +22,61 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('auth/register', [AuthController::class, 'register'])->name('register');
-Route::post('auth/login', [AuthController::class, 'login'])->name('login');
+Route::post('register', [AuthController::class, 'register'])->name('register');
+Route::post('login', [AuthController::class, 'login'])->name('login');
+
+Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
 Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
 Route::get('courses/{course}', [CourseController::class, 'show'])->name('courses.show');
 
-Route::middleware('auth')->group(function () {
-    Route::post('courses', [CourseController::class, 'store'])->name('courses.store');
-    Route::put('courses/{course}', [CourseController::class, 'update'])
-        ->name('courses.update')
-        ->middleware('can:update,course');
+Route::get('lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show');
 
-    Route::delete('courses/{course}', [CourseController::class, 'destroy'])
-        ->name('courses.destroy')
-        ->middleware('can:destroy,course');
+Route::middleware('auth:api')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
-    Route::apiResource('tasks', TaskController::class);
+    Route::name('courses.')->group(function () {
+        Route::post('courses', [CourseController::class, 'store'])->name('store');
 
-    Route::post('auth/logout', [AuthController::class, 'logout'])->name('logout');
+        Route::put('courses/{course}', [CourseController::class, 'update'])
+            ->name('update')
+            ->can('update', 'course');
+
+        Route::delete('courses/{course}', [CourseController::class, 'destroy'])
+            ->name('destroy')
+            ->can('destroy', 'course');
+    });
+
+    Route::name('lessons.')->group(function () {
+        Route::get('lessons/create', [LessonController::class, 'create'])->name('create');
+        Route::post('lessons', [LessonController::class, 'store'])->name('store');
+
+        Route::put('lessons/{lesson}', [LessonController::class, 'update'])
+            ->name('update')
+            ->can('update', 'lesson');
+
+        Route::delete('lessons/{lesson}', [LessonController::class, 'destroy'])
+            ->name('destroy')
+            ->can('destroy', 'lesson');
+    });
+
+    Route::name('subscriptions.')->group(function () {
+        Route::get('subscriptions', [SubscriptionController::class, 'index'])->name('index');
+        Route::post('subscriptions/{course}', [SubscriptionController::class, 'store'])->name('store');
+        Route::delete('subscriptions/{course}', [SubscriptionController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::name('tasks.')->group(function () {
+        Route::get('tasks', [TaskController::class, 'index'])->name('index');
+        Route::post('tasks', [TaskController::class, 'store'])->name('store');
+        Route::put('tasks/{task}', [TaskController::class, 'update'])
+            ->name('update')
+            ->can('update', 'task');
+        Route::delete('tasks/{task}', [TaskController::class, 'destroy'])
+            ->name('destroy')
+            ->can('destroy', 'task');
+    });
+
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });

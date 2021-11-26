@@ -6,29 +6,12 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/**
- * @OA\Schema(
- *     title="TaskResource",
- *     description="Task resource",
- *     @OA\Xml(
- *         name="TaskResource"
- *     )
- * )
- */
 class TaskResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /**
-         * @OA\Property(
-         *     title="Title",
-         *     description="Task title",
-         * )
-         *
-         * @var \App\\Models\Task
-         */
-
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
             'end_time' => $this->end_time,

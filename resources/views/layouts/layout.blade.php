@@ -12,9 +12,9 @@
     <meta property="og:title" content="@yield('title', 'Mentor')" />
     @yield('meta')
 
-    <script src="{{ 'js/app.js' }}"></script>
     <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/loading.css') }}" rel="stylesheet">
     @env('production')
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-NQBJ9919BD"></script>
         <script>
@@ -44,7 +44,7 @@
                             <ul class="navbar-nav">
                                 <li class="nav-item">
                                     <a href="{{ route('platform.categories.list') }}"
-                                       class="{{ Route::is('platform.categories.list') ? 'text-info' : 'text-light' }} text-decoration-none h5 px-3">{{ __('app.title.courses') }}
+                                       class="{{ Route::is('platform.categories.list') ? 'text-info' : 'text-light' }} text-decoration-none h5 px-3">{{ __('app.title.categories') }}
                                     </a>
                                 </li>
                                 @auth
@@ -101,5 +101,6 @@
             </footer>
         @show
     </div>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

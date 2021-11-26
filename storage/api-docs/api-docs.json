@@ -1,14 +1,10 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Laravel OpenApi Documentation",
+        "title": "Mentor OpenApi Documentation",
         "description": "L5 Swagger OpenApi. Mentor API documentation",
         "contact": {
             "email": "mikhailgregurco@gmail.com"
-        },
-        "license": {
-            "name": "Apache 2.4.41",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         },
         "version": "1.0.0"
     },
@@ -19,14 +15,677 @@
         }
     ],
     "paths": {
-        "/": {
-            "get": {
-                "description": "Home page",
+        "/register": {
+            "post": {
+                "tags": [
+                    "Authenticate"
+                ],
+                "summary": "Register new user",
+                "description": "Return user data",
+                "operationId": "register",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegistrationRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
-                    "default": {
-                        "description": "Welcome page"
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     }
                 }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authenticate"
+                ],
+                "summary": "User login",
+                "description": "Return user data",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AccessRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Authenticate"
+                ],
+                "summary": "Logout user",
+                "operationId": "logout",
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get list of categories",
+                "description": "Return list of categories",
+                "operationId": "getCategoriesList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CategoryResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/categories/{id}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get category",
+                "description": "Return category",
+                "operationId": "getCategory",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Category id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CategoryResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/courses": {
+            "get": {
+                "tags": [
+                    "Courses"
+                ],
+                "summary": "Get list of courses",
+                "description": "Return list of courses",
+                "operationId": "getCoursesList",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CourseResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Courses"
+                ],
+                "summary": "Store new course",
+                "description": "Return course data",
+                "operationId": "storeCourse",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreCourseRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/courses/{id}": {
+            "get": {
+                "tags": [
+                    "Courses"
+                ],
+                "summary": "Get course",
+                "description": "Return course",
+                "operationId": "getCourse",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Course id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CourseResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Courses"
+                ],
+                "summary": "Update existing course",
+                "description": "Returns updated course data",
+                "operationId": "updateCourse",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Course id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateCourseRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Course"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Courses"
+                ],
+                "summary": "Delete existing course",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteCourse",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Course id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/lessons/{id}": {
+            "get": {
+                "tags": [
+                    "Lessons"
+                ],
+                "summary": "Get lesson",
+                "description": "Return lesson",
+                "operationId": "getLesson",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Lesson id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LessonResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Lessons"
+                ],
+                "summary": "Update existing lesson",
+                "description": "Returns updated lesson data",
+                "operationId": "updateLesson",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Lesson id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateLessonRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "202": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Lesson"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Lessons"
+                ],
+                "summary": "Delete existing lesson",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteLesson",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Lesson id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/lessons/create": {
+            "get": {
+                "tags": [
+                    "Lessons"
+                ],
+                "summary": "Get course id for creating lesson",
+                "operationId": "lessonCreation",
+                "parameters": [
+                    {
+                        "name": "course_id",
+                        "in": "query",
+                        "description": "Course id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/lessons": {
+            "post": {
+                "tags": [
+                    "Lessons"
+                ],
+                "summary": "Store new lesson",
+                "description": "Return lesson data",
+                "operationId": "storeLesson",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreLessonRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Lesson"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/subscriptions": {
+            "get": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Get list of subscriptions",
+                "description": "Return list of subscriptions",
+                "operationId": "getSubscriptions",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/subscriptions/{courseId}": {
+            "post": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Store new subscription",
+                "operationId": "storeSubscription",
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Subscription"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Subscriptions"
+                ],
+                "summary": "Delete existing subscription",
+                "description": "Deletes a record and returns no content",
+                "operationId": "deleteSubscription",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Course id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/tasks": {
@@ -50,11 +709,13 @@
                     },
                     "401": {
                         "description": "Unauthenticated"
-                    },
-                    "403": {
-                        "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -68,7 +729,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/StoreTaskRequest"
+                                "$ref": "#/components/schemas/TaskRequest"
                             }
                         }
                     }
@@ -89,14 +750,16 @@
                     },
                     "401": {
                         "description": "Unauthenticated"
-                    },
-                    "403": {
-                        "description": "Forbidden"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
-        "/tasks/{task}": {
+        "/tasks/{id}": {
             "put": {
                 "tags": [
                     "Tasks"
@@ -120,7 +783,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/StoreTaskRequest"
+                                "$ref": "#/components/schemas/TaskRequest"
                             }
                         }
                     }
@@ -148,7 +811,12 @@
                     "404": {
                         "description": "Resource Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -186,14 +854,452 @@
                     "404": {
                         "description": "Resource Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         }
     },
     "components": {
         "schemas": {
-            "StoreTaskRequest": {
-                "title": "Store Task request",
+            "Category": {
+                "title": "Category",
+                "description": "Category model",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Unique id of category",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "Category name",
+                        "type": "string",
+                        "example": "web programming"
+                    },
+                    "slug": {
+                        "title": "slug",
+                        "description": "Category slug",
+                        "type": "string",
+                        "example": "web-programming"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Category"
+                }
+            },
+            "Course": {
+                "title": "Course",
+                "description": "Course model",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Unique id of course",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "title": {
+                        "title": "title",
+                        "description": "Course title",
+                        "type": "string",
+                        "example": "programming"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "Description of the new course",
+                        "type": "string",
+                        "example": "This is new course's description"
+                    },
+                    "user_id": {
+                        "title": "user ID",
+                        "description": "User's id of the new course",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "category_id": {
+                        "title": "category ID",
+                        "description": "Category's id of the new course",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "title": "created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Course"
+                }
+            },
+            "Lesson": {
+                "title": "Lesson",
+                "description": "Lesson model",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Unique id of lesson",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "title": {
+                        "title": "title",
+                        "description": "Lesson title",
+                        "type": "string",
+                        "example": "HTML5 basic"
+                    },
+                    "information": {
+                        "title": "information",
+                        "description": "Information of the new lesson",
+                        "type": "string",
+                        "example": "Lesson information..."
+                    },
+                    "course_id": {
+                        "title": "course ID",
+                        "description": "course id of new lesson",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "title": "created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Lesson"
+                }
+            },
+            "Subscription": {
+                "title": "Subscription",
+                "description": "Subscription model",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Unique id of subscription",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "title": "user ID",
+                        "description": "User's id of the new subscription",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "course_id": {
+                        "title": "course ID",
+                        "description": "Course's id of the new subscription",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Subscription"
+                }
+            },
+            "Task": {
+                "title": "Task",
+                "description": "Task model",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Unique id of task",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "title": {
+                        "title": "title",
+                        "description": "Task title",
+                        "type": "string",
+                        "example": "read book"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "Description of the new task",
+                        "type": "string",
+                        "example": "This is new task's description"
+                    },
+                    "user_id": {
+                        "title": "user ID",
+                        "description": "User's id of the new task",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "end_time": {
+                        "title": "end time",
+                        "description": "End time of task",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-28 20:50:45"
+                    },
+                    "created_at": {
+                        "title": "created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Task"
+                }
+            },
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "properties": {
+                    "id": {
+                        "title": "id",
+                        "description": "Unique id of user",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "name",
+                        "description": "User name",
+                        "type": "string",
+                        "example": "Joe Doe"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "User email",
+                        "type": "string",
+                        "example": "joe@gmail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "User password",
+                        "type": "string",
+                        "example": "joedoe123"
+                    },
+                    "created_at": {
+                        "title": "created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "AccessRequest": {
+                "title": "Login User request",
+                "description": "Login user request body data",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "title": "email",
+                        "description": "User email",
+                        "type": "string",
+                        "example": "taylor@gmail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "User password",
+                        "type": "string",
+                        "example": 12345678
+                    }
+                },
+                "type": "object"
+            },
+            "CreateLessonRequest": {
+                "title": "Create Lesson request",
+                "description": "Create Lesson request body data",
+                "required": [
+                    "course_id"
+                ],
+                "properties": {
+                    "course_id": {
+                        "title": "course ID",
+                        "description": "Course's id of the new lesson",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "RegistrationRequest": {
+                "title": "Register User request",
+                "description": "Store User request body data",
+                "required": [
+                    "name",
+                    "email",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "name",
+                        "description": "Name of the new user",
+                        "type": "string",
+                        "example": "Taylor"
+                    },
+                    "email": {
+                        "title": "email",
+                        "description": "User email",
+                        "type": "string",
+                        "example": "taylor@gmail.com"
+                    },
+                    "password": {
+                        "title": "password",
+                        "description": "User password",
+                        "type": "string",
+                        "example": 12345678
+                    },
+                    "password_confirmation": {
+                        "title": "password_confirmation",
+                        "description": "User password confirmation",
+                        "type": "string",
+                        "example": 12345678
+                    }
+                },
+                "type": "object"
+            },
+            "StoreCourseRequest": {
+                "title": "Store Course request",
+                "description": "Store Course request body data",
+                "required": [
+                    "title",
+                    "description",
+                    "category_id"
+                ],
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "description": "Course title",
+                        "type": "string",
+                        "example": "programming"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "Description of the new course",
+                        "type": "string",
+                        "example": "This is new project's description"
+                    },
+                    "category_id": {
+                        "title": "category ID",
+                        "description": "Category's id of the new course",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "StoreLessonRequest": {
+                "title": "Store Lesson request",
+                "description": "Store Lesson request body data",
+                "required": [
+                    "title",
+                    "information",
+                    "course_id"
+                ],
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "description": "Lesson title",
+                        "type": "string",
+                        "example": "programming basics"
+                    },
+                    "information": {
+                        "title": "information",
+                        "description": "Lesson information",
+                        "type": "string",
+                        "example": "programming..."
+                    },
+                    "course_id": {
+                        "title": "course ID",
+                        "description": "Course's id of the new lesson",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "status": {
+                        "title": "status",
+                        "description": "Status of lesson. Can be 0 (not important) or 1 (important)",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "TaskRequest": {
+                "title": "Task request",
                 "description": "Store Task request body data",
                 "required": [
                     "title"
@@ -221,85 +1327,94 @@
                 },
                 "type": "object"
             },
+            "UpdateCourseRequest": {
+                "title": "Update Course request",
+                "description": "Update Course request body data",
+                "required": [
+                    "title",
+                    "description"
+                ],
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "description": "Name of the new task",
+                        "type": "string",
+                        "example": "Computer networking"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "Description of the new task",
+                        "type": "string",
+                        "example": "Computer networking is a course..."
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateLessonRequest": {
+                "title": "Update Lesson request",
+                "description": "Update Lesson request body data",
+                "required": [
+                    "title",
+                    "information"
+                ],
+                "properties": {
+                    "title": {
+                        "title": "title",
+                        "description": "Lesson title",
+                        "type": "string",
+                        "example": "programming basics"
+                    },
+                    "information": {
+                        "title": "information",
+                        "description": "Lesson information",
+                        "type": "string",
+                        "example": "programming..."
+                    }
+                },
+                "type": "object"
+            },
+            "CategoryResource": {
+                "title": "CategoryResource",
+                "description": "Category resource",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/Category"
+                    }
+                },
+                "type": "object"
+            },
+            "CourseResource": {
+                "title": "CourseResource",
+                "description": "Course resource",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/Course"
+                    }
+                },
+                "type": "object"
+            },
+            "LessonResource": {
+                "title": "LessonResource",
+                "description": "Lesson resource",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/Lesson"
+                    }
+                },
+                "type": "object"
+            },
             "TaskResource": {
                 "title": "TaskResource",
                 "description": "Task resource",
                 "properties": {
-                    "": {
-                        "title": "Title",
-                        "description": "Task title"
+                    "data": {
+                        "$ref": "#/components/schemas/Task"
                     }
                 },
-                "type": "object",
-                "xml": {
-                    "name": "TaskResource"
-                }
-            },
-            "Task": {
-                "title": "Task",
-                "description": "Task model",
-                "properties": {
-                    "id": {
-                        "title": "ID",
-                        "description": "ID",
-                        "type": "integer",
-                        "format": "int64",
-                        "example": 1
-                    },
-                    "title": {
-                        "title": "Title",
-                        "description": "Title of the new task",
-                        "type": "string",
-                        "example": "drink coffee"
-                    },
-                    "description": {
-                        "title": "Description",
-                        "description": "Description of the new task",
-                        "type": "string",
-                        "example": "This is new task's description"
-                    },
-                    "end_time": {
-                        "title": "End time",
-                        "description": "End time of task",
-                        "type": "string",
-                        "format": "datetime",
-                        "example": "2020-01-27 17:50:45"
-                    },
-                    "user_id": {
-                        "title": "User ID",
-                        "description": "User's id of the new task",
-                        "type": "integer",
-                        "format": "int64",
-                        "example": 1
-                    },
-                    "created_at": {
-                        "title": "Created at",
-                        "description": "Created at",
-                        "type": "string",
-                        "format": "datetime",
-                        "example": "2020-01-27 17:50:45"
-                    },
-                    "updated_at": {
-                        "title": "Updated at",
-                        "description": "Updated at",
-                        "type": "string",
-                        "format": "datetime",
-                        "example": "2020-01-27 17:50:45"
-                    }
-                },
-                "type": "object",
-                "xml": {
-                    "name": "Task"
-                }
+                "type": "object"
             }
         }
     },
-    "tags": [
-        {
-            "name": "Mentor",
-            "description": "API Endpoints of Mentor"
-        }
-    ],
     "security": [
         []
     ]

@@ -1,10 +1,14 @@
 require('bootstrap');
 
+window.axios = require('axios');
 import './libs/trix.js';
 
 import Vue from 'vue'
 
 Vue.component('task-page', require('./components/Task.vue').default);
+Vue.component('category-page', require('./components/Category').default)
+Vue.component('subscription-page', require('./components/Subscription').default)
+Vue.component('dashboard-page', require('./components/Dashboard').default)
 
 const app = new Vue({
     el: '#app',

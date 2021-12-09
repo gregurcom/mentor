@@ -32,46 +32,8 @@ footer, nav {
     margin: 8px;
 }
 
-.navbar-toggler {
+.text-crystal {
     color: #69d2f1;
-}
-
-@media screen and (max-width: 991px) {
-    #homeIllustrate {
-        width: 300px;
-    }
-
-    .nav-item {
-        margin-top: 15px;
-    }
-
-    .navbar-collapse {
-        margin-top: 8px;
-        z-index: 1;
-        position: relative;
-    }
-}
-
-@media screen and (max-width: 930px) {
-    #homeIllustrate {
-        width: 250px;
-        height: 300px;
-    }
-}
-
-@media screen and (min-width: 768px) {
-    #courseTitle {
-        text-align: end;
-    }
-    #subscribeButton {
-        text-align: start;
-    }
-    .lesson-title {
-        margin-left: 30px;
-    }
-    .table-button {
-        width: 100px;
-    }
 }
 
 .head-link {
@@ -89,4 +51,95 @@ footer, nav {
 
 #switch-lang {
     padding-left: 11px;
+}
+
+a:hover {
+    color: #69d2f1;
+}
+
+#search {
+    position: absolute;
+    margin-left: 8px;
+    margin-top: 7px;
+}
+
+#search-input {
+    padding-left: 29px
+}
+
+@media screen and (max-width: 991px) {
+    #homeIllustrate {
+        width: 360px;
+    }
+
+    .nav-item {
+        margin-top: 15px;
+    }
+
+    .navbar-collapse {
+        margin-top: 8px;
+        z-index: 1;
+        position: relative;
+    }
+}
+
+@media screen and (max-width: 930px) {
+    #homeIllustrate {
+        width: 360px;
+        height: 300px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #courseTitle {
+        text-align: end;
+    }
+
+    #subscribeButton {
+        text-align: start;
+    }
+
+    .lesson-title {
+        margin-left: 30px;
+    }
+
+    .table-button {
+        width: 100px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    #course-image {
+        width: 400px;
+        height: 200px;
+    }
+
+    #homeIllustrate {
+        width: 300px;
+        height: 260px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #course-image {
+        width: 300px;
+        height: 150px;
+    }
+
+    #homeIllustrate {
+        width: 250px;
+        height: 190px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    #course-image {
+        width: 200px;
+        height: 100px;
+    }
+
+    #homeIllustrate {
+        width: 200px;
+        height: 140px;
+    }
 }

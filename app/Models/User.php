@@ -42,6 +42,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ADMIN = 'admin';
+
     protected $guarded = [];
 
     /**
